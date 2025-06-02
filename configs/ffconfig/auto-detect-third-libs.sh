@@ -311,4 +311,22 @@ case "$MR_PLAT" in
         THIRD_CFG_FLAGS="$THIRD_CFG_FLAGS --disable-asm --disable-inline-asm"
     fi
     ;;
+    ohos)
+    # enable mediacodec hwaccel
+    THIRD_CFG_FLAGS="$THIRD_CFG_FLAGS --enable-jni"
+    THIRD_CFG_FLAGS="$THIRD_CFG_FLAGS --enable-mediacodec"
+    THIRD_CFG_FLAGS="$THIRD_CFG_FLAGS --enable-decoder=h264_mediacodec --enable-hwaccel=h264_mediacodec"
+    THIRD_CFG_FLAGS="$THIRD_CFG_FLAGS --enable-decoder=h265_mediacodec --enable-hwaccel=h265_mediacodec"
+    # disable iconv
+    THIRD_CFG_FLAGS="$THIRD_CFG_FLAGS --disable-iconv"
+    THIRD_CFG_FLAGS="$THIRD_CFG_FLAGS --disable-bzlib"
+    if [[ "$MR_ARCH" == "armv7a" || "$MR_ARCH" == "arm64" ]]; then
+        # enable asm
+        THIRD_CFG_FLAGS="$THIRD_CFG_FLAGS --enable-neon"
+        THIRD_CFG_FLAGS="$THIRD_CFG_FLAGS --enable-asm --enable-inline-asm"
+    else
+        THIRD_CFG_FLAGS="$THIRD_CFG_FLAGS --disable-neon"
+        THIRD_CFG_FLAGS="$THIRD_CFG_FLAGS --disable-asm --disable-inline-asm"
+    fi
+    ;;
 esac

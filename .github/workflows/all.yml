@@ -20,6 +20,7 @@ on:
         options:
           - apple
           - android
+          - ohos
           - all
           - ios
           - tvos
@@ -114,3 +115,4 @@ jobs:
         .github/workflows/onestep.sh ffmpeg ${{ inputs.platform }} ${{ inputs.dryrun }}
       env:
         ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+        OHOS_NDK_HOME: ${{ steps.setup-ndk.outputs.ohos.ndk-path }}

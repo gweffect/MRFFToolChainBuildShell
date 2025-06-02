@@ -13,16 +13,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-# when '-l all' will use blew default config:
-apple_default_libs="openssl opus dav1d dvdread xml2 freetype fribidi harfbuzz unibreak ass ffmpeg smb2 bluray"
+# call common cmake build shell
+./cmake-compatible.sh
 
-android_default_libs="openssl opus dav1d dvdread xml2 freetype fribidi harfbuzz unibreak fontconfig ass ffmpeg smb2 bluray soundtouch"
+mkdir -p ${MR_BUILD_PREFIX}/lib/pkgconfig
 
-ohos_default_libs="openssl opus dav1d dvdread xml2 freetype fribidi harfbuzz unibreak fontconfig ass ffmpeg smb2 bluray soundtouch"
+echo "
+prefix=${MR_BUILD_PREFIX}
+includedir=\${prefix}/include
+libdir=\${prefix}/lib
 
-export ios_default_libs="$apple_default_libs"
-export macos_default_libs="$apple_default_libs"
-export tvos_default_libs="$apple_default_libs"
-export ohos_default_libs="$ohos_default_libs"
+Name: yuv
+Description: libyuv
+Version: ${GIT_REPO_VERSION}
+Libs: -L\${libdir} -lyuv
+Cflags: -I\${includedir}" > ${MR_BUILD_PREFIX}/lib/pkgconfig/yuv.pc
+
+

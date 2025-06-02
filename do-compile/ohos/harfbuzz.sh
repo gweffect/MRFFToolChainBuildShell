@@ -14,15 +14,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# https://github.com/harfbuzz/harfbuzz/blob/main/BUILD.md
 
-# when '-l all' will use blew default config:
-apple_default_libs="openssl opus dav1d dvdread xml2 freetype fribidi harfbuzz unibreak ass ffmpeg smb2 bluray"
+# https://trac.macports.org/ticket/60987
 
-android_default_libs="openssl opus dav1d dvdread xml2 freetype fribidi harfbuzz unibreak fontconfig ass ffmpeg smb2 bluray soundtouch"
+set -e
 
-ohos_default_libs="openssl opus dav1d dvdread xml2 freetype fribidi harfbuzz unibreak fontconfig ass ffmpeg smb2 bluray soundtouch"
+CFG_FLAGS="-Ddocs=disabled -Dcairo=disabled -Dchafa=disabled -Dtests=disabled"
 
-export ios_default_libs="$apple_default_libs"
-export macos_default_libs="$apple_default_libs"
-export tvos_default_libs="$apple_default_libs"
-export ohos_default_libs="$ohos_default_libs"
+echo "----------------------"
+echo "[*] check freetype"
+
+pkg-config --libs freetype2 --silence-errors >/dev/null && enable_freetype2=1
+
+if [[ $enable_freetype2 ]];then
+    echo "[*] --enable-freetype : $(pkg-config --modversion freetype2)"
+    CFG_FLAGS="$CFG_FLAGS -Dfreetype=enabled"
+else
+    echo "[*] --disable-freetype"
+    CFG_FLAGS="$CFG_FLAGS -Dfreetype=disabled"
+fi
+
+./meson-compatible.sh "$CFG_FLAGS"

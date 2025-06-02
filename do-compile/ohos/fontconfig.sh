@@ -15,14 +15,5 @@
 # limitations under the License.
 #
 
-# when '-l all' will use blew default config:
-apple_default_libs="openssl opus dav1d dvdread xml2 freetype fribidi harfbuzz unibreak ass ffmpeg smb2 bluray"
-
-android_default_libs="openssl opus dav1d dvdread xml2 freetype fribidi harfbuzz unibreak fontconfig ass ffmpeg smb2 bluray soundtouch"
-
-ohos_default_libs="openssl opus dav1d dvdread xml2 freetype fribidi harfbuzz unibreak fontconfig ass ffmpeg smb2 bluray soundtouch"
-
-export ios_default_libs="$apple_default_libs"
-export macos_default_libs="$apple_default_libs"
-export tvos_default_libs="$apple_default_libs"
-export ohos_default_libs="$ohos_default_libs"
+# call common meson build shell
+./meson-compatible.sh "-Ddoc=disabled -Dtests=disabled -Dtools=disabled"
